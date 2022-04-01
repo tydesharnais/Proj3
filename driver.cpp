@@ -17,8 +17,8 @@
 
 #define SIZE    100
 
-int main(int argc, char *argv[])
-{
+int main(int argc, char *argv[]){
+    
     std::cout << "CS 433 Programming assignment 3" << std::endl;
     std::cout << "Author: xxxxxx and xxxxxxx" << std::endl;
     std::cout << "Date: xx/xx/20xx" << std::endl;
