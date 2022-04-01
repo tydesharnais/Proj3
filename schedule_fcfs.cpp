@@ -4,6 +4,9 @@
 #include "task.h"
 #include "list.h"
 #include "cpu.h"
+#include <queue>
+#include "ReadyQueue.cpp"
+
 
 /*
 struct node {
@@ -22,19 +25,14 @@ typedef struct task {
  void add(char *name, int priority, int burst) 
 {
     
-    node *head;
-    node *last;
+    Task task;
+    task.name = name;
+    task.tid = 999;
+    task.priority = priority;
+    task.burst = burst;
     
 
-    if(head == NULL){
-        head = new node();
-        head->task->name = name;
-        head->task->priority = priority;
-        head->task->burst = burst;
-        head->next = NULL;
 
-        last = head;
-    }
     
 
 	// TODO: add your implementation here
