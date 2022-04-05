@@ -1,9 +1,7 @@
 #include <stdlib.h>
 #include <stdio.h>
-
 #include "task.h"
-#include "list.h"
-#include "cpu.h"
+#include "CPU.cpp"
 #include <queue>
 #include "ReadyQueue.cpp"
 
@@ -28,9 +26,13 @@ queue<Task> taskQueue;
     
     Task task;
     task.name = name;
-    task.tid = 999;
+   // task.tid = 999;
     task.priority = priority;
     task.burst = burst;
+  //  std::cout << "Added " << name << task.name << " " << priority << " " << burst << std::endl;
+
+    
+
     
     taskQueue.push(task);
 	// TODO: add your implementation here
@@ -47,12 +49,14 @@ void schedule()
     float reponse_Time = 0;
     int final_Time = 0;
     int num_Tasks = 0;
+    Task tempTask;
 
     while(!taskQueue.empty()){
 
         num_Tasks = num_Tasks + 1;
 
-        Task tempTask = taskQueue.front();
+        tempTask = taskQueue.front();
+       
 
         run(&tempTask, tempTask.burst);
 
@@ -66,6 +70,7 @@ void schedule()
         } */
         
         wait_Time = turn_Time - final_Time;
+        turn_Time = wait_Time + tempTask.burst;
 
         cout << tempTask.name << " turn-around time = " << turn_Time << ", waiting time = " << wait_Time << endl;
         

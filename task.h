@@ -8,7 +8,6 @@
 // representation of a task
 typedef struct task {
     char *name;
-    int tid;
     int priority;
     int burst;
 } Task;

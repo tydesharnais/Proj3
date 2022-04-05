@@ -96,7 +96,7 @@ void MaxHeap::insert_Task(Task &task){
 void MaxHeap::insert_PCB(PCB &new_PCB){
     size++;
     new_PCB.set_STATE(PCB::STATE::READY); //set new state to ready
-    taskHeap.emplace_back(&new_PCB); //inserts new PCB
+    pcbHeap.emplace_back(&new_PCB); //inserts new PCB
     int count = size -1;
 
     while(count != 0 && pcbHeap.at(parent(count))->get_PRIORITY() < pcbHeap.at(count)->get_PRIORITY()){ 
@@ -198,16 +198,16 @@ void MaxHeap::swap_Task(Task *a, Task *b){
     int tmpPriority = a->priority;
     int tmpBurst = a->burst;
     char* tmpName = a->name;
-    int tmpID = a->tid;
+  //  int tmpID = a->tid;
 
     a->name = b->name;
     a->priority = b->priority;
     a->burst = b->burst;
-    a->tid = b->tid;
+   // a->tid = b->tid;
 
     b->name = tmpName;
     b->priority = tmpPriority;
-    b->tid = tmpID;
+   // b->tid = tmpID;
     b->burst = tmpBurst;
 
 }

@@ -14,6 +14,7 @@
 #include "task.h"
 #include "list.h"
 #include "schedulers.h"
+#include "schedule_fcfs.cpp"
 
 #define SIZE    100
 
@@ -37,15 +38,19 @@ int main(int argc, char *argv[]){
     in = fopen(argv[1],"r");
     
     while (fgets(task,SIZE,in) != NULL) {
-        temp = strdup(task);
-        name = strsep(&temp,",");
-        priority = atoi(strsep(&temp,","));
-        burst = atoi(strsep(&temp,","));
+        name = strtok(task,",");
+        priority = atoi(strtok(NULL, ","));
+        burst = atoi(strtok(NULL, ","));
 
+      //  temp = strdup(task);
+      //  string tempSplit[] = strtok(temp,",");
+        
         // add the task to the scheduler's list of tasks
+        cout << name << endl;
         add(name,priority,burst);
+        //std::cout << "Added " << name << " " << priority << " " << burst << std::endl;
 
-        free(temp);
+      //  free(temp);
     }
 
     fclose(in);
