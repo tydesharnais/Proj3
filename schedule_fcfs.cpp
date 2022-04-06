@@ -1,11 +1,13 @@
 #include <stdlib.h>
 #include <stdio.h>
-#include "task.h"
-#include "CPU.cpp"
+#include <iostream>
 #include <queue>
-#include "ReadyQueue.cpp"
+#include "task.h"
+#include "cpu.h"
+#include "schedulers.h"
+#include "ReadyQueue.h"
 
-
+using namespace std;
 /*
 struct node {
     Task *task;
@@ -30,13 +32,12 @@ queue<Task> taskQueue;
     task.priority = priority;
     task.burst = burst;
   //  std::cout << "Added " << name << task.name << " " << priority << " " << burst << std::endl;
-
     
 
     
     taskQueue.push(task);
-    cout << taskQueue.front().name << endl;
 	// TODO: add your implementation here
+    
 	
 }
 
@@ -47,45 +48,35 @@ void schedule()
 {
     float turn_Time = 0;
     float wait_Time = 0;
-    float reponse_Time = 0;
     int final_Time = 0;
-    int final_Wait = 0;
     int num_Tasks = 0;
     Task tempTask;
-
+    char* a;
+   
     while(!taskQueue.empty()){
 
         num_Tasks = num_Tasks + 1;
 
         tempTask = taskQueue.front();
-       
-       
+        a = tempTask.name;
+
         run(&tempTask, tempTask.burst);
 
-        //With previous
         final_Time = final_Time + tempTask.burst;
         turn_Time = turn_Time + final_Time;
-        
+
         taskQueue.pop();
 
+       /* if(!taskQueue.empty()){
+            reponse_Time = reponse_Time + final_Time;            
+        } */
+        
         wait_Time = turn_Time - final_Time;
         turn_Time = wait_Time + tempTask.burst;
-        
-        //Finals
-        final_Time = final_Time + turn_Time;
-        final_Wait = final_Wait + wait_Time;
-      
 
-
-       
-
-        cout << tempTask.name << " turn-around time = " << turn_Time << ", waiting time = " << wait_Time << endl;
-        
+        cout << a << " turn-around time = " << turn_Time << ", waiting time = " << wait_Time << endl;
         
     }
-    //Is empty
-    final_Time = final_Time - turn_Time;
-    
-    cout << "Average turnaround time " << final_Time/num_Tasks << ", Average waiting time " << final_Wait/num_Tasks << endl; 
+    cout << "Average turnaround time " << turn_Time/num_Tasks << ", Average waiting time " << wait_Time/num_Tasks << endl; 
 	// TODO: add your implementation here
 }

@@ -1,92 +1,10 @@
 #include <iostream>
 #include <vector>
-#include "PCB.cpp"
+#include "PCB.h"
 #include "task.h"
+#include "MaxHeap.h"
 
 using namespace std;
-
-#define INT_MIN -999999
-#define INT_MAX 999999
-
-/*
-typedef struct task {
-    char *name;
-    int tid;
-    int priority;
-    int burst;
-} Task;
-*/
-
-class MaxHeap{
-    friend class PCB;
-    friend class ReadyQueue;
-    
-
-    private:
-
-        int capacity; //For display optional 
-
-        int size;  //Current size of Heap
-        int* heap; //pointer for heap array
-
-        vector<PCB*> pcbHeap;
-        vector<Task*> taskHeap;
-        
-        
-    
-    public:
-
-        //Priority Queue init - mockArray tells us to be a priority queue. USE THIS!
-        MaxHeap(){
-            size = 0;
-        }
-
-
-        MaxHeap(int size){
-            
-            this->capacity = capacity;
-            this->size = size;
-            this->heap = new int[size];
-            for(int i= 0; i < size; i++){
-                heap[i] = i;
-            }
-        }
-
-        /*Methods*/  
-        
-        //Getters
-        
-        //Inline Functions for optimization and decreased function overhead
-
-        int getSize(){return size;}
-        int getCapacity(){return capacity;}
-        bool isEmpty(){if(size <= 0){return true;}return false;}
-        int parent(int i){return (i -1)/2;}
-        int leftChild(int i){return 2 * i +1;}
-        int rightChild(int i){return 2 * i +2;} 
-
-        //Min-Heap Main functions
-
-        void buildHeap(); //build OG heap
-        void heapify(int i); //heapify and bubble up + array of pcbHeap
-        PCB* peek_min(); //returns minimum element from heap
-        void pop_top();
-        
-        //Aux functions for the heap
-        void swap_PCB(PCB *a, PCB *b);
-        void swap_Task(Task *a, Task *b);
-        void swap(int &a, int &b);
-
-        void printHeapLevels(); //print heap levels
-        void printHeap(); //basic print
-        int get_SIZE(){return size;};
-
-        //Insert function
-        void insert_PCB(PCB &new_PCB);
-        void insert_Task(Task &task);
-
-        void debugHelper(int left, int right, int cur_Largest);
-};
 
 void MaxHeap::insert_Task(Task &task){
     size++;
@@ -174,9 +92,7 @@ PCB* MaxHeap::peek_min(){
     if(isEmpty()==true){
         cout << "Queue is empty!" << endl;
     }
-    else{
-        return pcbHeap.at(0);
-    }
+    return pcbHeap.at(0);
 }
         
 //Aux functions for the heap

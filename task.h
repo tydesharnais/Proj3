@@ -7,7 +7,7 @@
 
 // representation of a task
 typedef struct task {
-    char *name;
+    char* name;
     int priority;
     int burst;
 } Task;

@@ -1,10 +1,11 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <iostream>
-#include "task.h"
-#include "CPU.cpp"
 #include <queue>
-#include "ReadyQueue.cpp"
+#include "task.h"
+#include "cpu.h"
+#include "schedulers.h"
+#include "ReadyQueue.h"
 
 using namespace std;
 
@@ -36,11 +37,10 @@ void schedule()
 {
     float turn_Time = 0;
     float wait_Time = 0;
-    float reponse_Time = 0;
     int final_Time = 0;
     int num_Tasks = taskQueue.size();
-    int runTime = 0;
-    int quantum = 10;
+    int runTime = QUANTUM;
+
     while (!taskQueue.empty()) {
 
         Task tempTask = taskQueue.front();
@@ -49,10 +49,10 @@ void schedule()
 
         if (taskQueue.size() > 1) {
             
-            if (tempTask.burst < quantum) {
+            if (tempTask.burst < runTime) {
                 runTime = tempTask.burst;
             }
-            else runTime = quantum;
+
 
             run(&tempTask, runTime);
 
@@ -83,7 +83,7 @@ void schedule()
              reponse_Time = reponse_Time + final_Time;
          } */
 
-        if (tempTask.burst = 0) {
+        if (tempTask.burst == 0) {
 
             wait_Time = turn_Time - final_Time;
             turn_Time = wait_Time + tempTask.burst;

@@ -10,13 +10,17 @@
 #include <stdlib.h>
 #include <string.h>
 #include <iostream>
-
+#include "cpu.h"
 #include "task.h"
 #include "list.h"
 #include "schedulers.h"
-#include "schedule_fcfs.cpp"
+#include "schedule_sjf.cpp"
+
+
+using namespace std;
 
 #define SIZE    100
+
 
 int main(int argc, char *argv[]){
     
@@ -27,11 +31,17 @@ int main(int argc, char *argv[]){
     std::cout << "Description : **** " << std::endl;
     std::cout << "=================================" << std::endl;
 
+    
+   
+    if(argv[2] != NULL) {
+
+    QUANTUM = atoi(argv[2]);
+
+    }
     FILE *in;
-    char *temp;
     char task[SIZE];
 
-    char *name;
+    char* name;
     int priority;
     int burst;
 
@@ -46,7 +56,6 @@ int main(int argc, char *argv[]){
       //  string tempSplit[] = strtok(temp,",");
         
         // add the task to the scheduler's list of tasks
-        
         add(name,priority,burst);
         //std::cout << "Added " << name << " " << priority << " " << burst << std::endl;
 
