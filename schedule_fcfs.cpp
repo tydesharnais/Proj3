@@ -35,6 +35,7 @@ queue<Task> taskQueue;
 
     
     taskQueue.push(task);
+    cout << taskQueue.front().name << endl;
 	// TODO: add your implementation here
 	
 }
@@ -48,6 +49,7 @@ void schedule()
     float wait_Time = 0;
     float reponse_Time = 0;
     int final_Time = 0;
+    int final_Wait = 0;
     int num_Tasks = 0;
     Task tempTask;
 
@@ -57,24 +59,33 @@ void schedule()
 
         tempTask = taskQueue.front();
        
-
+       
         run(&tempTask, tempTask.burst);
 
+        //With previous
         final_Time = final_Time + tempTask.burst;
         turn_Time = turn_Time + final_Time;
-
+        
         taskQueue.pop();
 
-       /* if(!taskQueue.empty()){
-            reponse_Time = reponse_Time + final_Time;            
-        } */
-        
         wait_Time = turn_Time - final_Time;
         turn_Time = wait_Time + tempTask.burst;
+        
+        //Finals
+        final_Time = final_Time + turn_Time;
+        final_Wait = final_Wait + wait_Time;
+      
+
+
+       
 
         cout << tempTask.name << " turn-around time = " << turn_Time << ", waiting time = " << wait_Time << endl;
         
+        
     }
-    cout << "Average turnaround time " << turn_Time/num_Tasks << ", Average waiting time " << wait_Time/num_Tasks << endl; 
+    //Is empty
+    final_Time = final_Time - turn_Time;
+    
+    cout << "Average turnaround time " << final_Time/num_Tasks << ", Average waiting time " << final_Wait/num_Tasks << endl; 
 	// TODO: add your implementation here
 }

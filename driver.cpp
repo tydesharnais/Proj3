@@ -46,7 +46,7 @@ int main(int argc, char *argv[]){
       //  string tempSplit[] = strtok(temp,",");
         
         // add the task to the scheduler's list of tasks
-        cout << name << endl;
+        
         add(name,priority,burst);
         //std::cout << "Added " << name << " " << priority << " " << burst << std::endl;
 
