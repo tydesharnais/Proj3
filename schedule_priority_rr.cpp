@@ -1,26 +1,27 @@
-
+#include <stdlib.h>
+#include <stdio.h>
+#include <iostream>
 #include "task.h"
-#include "list.h"
-#include "cpu.h"
+#include "CPU.cpp"
 #include <queue>
 #include "ReadyQueue.cpp"
 
+using namespace std;
 
 queue<Task> taskQueue;
-
 // add a new task to the list of tasks
-void add(char* name, int priority, int burst)
+void add(char *name, int priority, int burst)
 {
 
     Task task;
     task.name = name;
-    task.tid = 999;
+    // task.tid = 999;
     task.priority = priority;
     task.burst = burst;
+    //  std::cout << "Added " << name << task.name << " " << priority << " " << burst << std::endl;
 
     taskQueue.push(task);
     // TODO: add your implementation here
-
 }
 
 /**
@@ -32,23 +33,53 @@ void schedule()
     float wait_Time = 0;
     float reponse_Time = 0;
     int final_Time = 0;
-    int num_Tasks = 0;
+    int num_Tasks = taskQueue.size();
     int runTime = 0;
+    int quantum = 10;
 
-    prioirity();
+    int q = taskQueue.size();
 
-    while (!taskQueue.empty()) {
-        prioirity();
+    vector<Task> a;
+
+    for (int i = 0; i < q; i++)
+    {
+        a.push_back(taskQueue.front());
+        taskQueue.pop();
+    }
+
+    for (int i = 0; i < q; i++)
+    {
+        for (int j = 0; j < q; j++)
+        {
+            if (a.at(i).priority > a.at(j).priority)
+            {
+                task temp;
+                temp = a.at(i);
+                a.at(i) = a.at(j);
+                a.at(j) = temp;
+            }
+        }
+    }
+
+    for (int i = 0; i < q; i++)
+    {
+        taskQueue.push(a.at(i));
+    }
+    a.clear();
+
+    while (!taskQueue.empty())
+    {
+
         Task tempTask = taskQueue.front();
-        num_Tasks = num_Tasks + 1;
 
-
-        if (taskQueue.size() > 1) {
-
-            if (tempTask.burst < QUANTUM) {
+        if (taskQueue.size() > 1)
+        {
+            if (tempTask.burst < quantum)
+            {
                 runTime = tempTask.burst;
             }
-            else runTime = QUANTUM;
+            else
+                runTime = quantum;
 
             run(&tempTask, runTime);
 
@@ -56,16 +87,19 @@ void schedule()
             tempTask.burst = tempTask.burst - runTime;
             final_Time = final_Time + runTime;
 
-            if (tempTask.burst > 0) {
+            if (tempTask.burst > 0)
+            {
 
                 taskQueue.push(tempTask);
             }
-            else {
+            else
+            {
 
                 turn_Time = turn_Time + final_Time;
             }
         }
-        else {
+        else
+        {
 
             run(&tempTask, tempTask.burst);
 
@@ -78,49 +112,42 @@ void schedule()
         /* if(!taskQueue.empty()){
              reponse_Time = reponse_Time + final_Time;
          } */
-
-        if (tempTask.burst = 0) {
+        if (tempTask.burst = 0)
+        {
 
             wait_Time = turn_Time - final_Time;
+            turn_Time = wait_Time + tempTask.burst;
 
             cout << tempTask.name << " turn-around time = " << turn_Time << ", waiting time = " << wait_Time << endl;
         }
 
+        int b = taskQueue.size();
+        for (int i = 0; i < b; i++)
+        {
+            a.push_back(taskQueue.front());
+            taskQueue.pop();
+        }
+
+        for (int i = 0; i < b; i++)
+        {
+            for (int j = 0; j < b; j++)
+            {
+                if (a.at(i).priority > a.at(j).priority)
+                {
+                    task temp;
+                    temp = a.at(i);
+                    a.at(i) = a.at(j);
+                    a.at(j) = temp;
+                }
+            }
+        }
+            
+        for (int i = 0; i < b; i++)
+        {
+            taskQueue.push(a.at(i));
+        }
+        a.clear();
     }
     cout << "Average turnaround time " << turn_Time / num_Tasks << ", Average waiting time " << wait_Time / num_Tasks << endl;
     // TODO: add your implementation here
-}
-
-void prioirity() {
-
-    int j = taskQueue.size();
-    vector <Task> a;
-    for (int i = 0; i < j; i++) {
-        a.at(i) = taskQueue.front();
-        taskQueue.pop();
-    }
-    int k = a.size();
-    bool check = true;
-    int stop = 0;
-    while (check)
-    {
-        for (int i = 1; i < k; i++) {
-            if (a.at(i--).priority > a.at(i).priority) {
-                task temp;
-                temp = a.at(i--);
-                a.at(i--) = a.at(i);
-                a.at(i) = temp;
-                stop++;
-
-            }
-        }
-        if (stop == 0) {
-            check = false;
-        }
-        stop = 0;
-    }
-
-    for (int i = 0; i < k; i++) {
-        taskQueue.push(a.at(i));
-    }
 }
