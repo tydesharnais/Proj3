@@ -10,6 +10,7 @@ typedef struct task {
     char *name;
     int priority;
     int burst;
+    int tid;
 } Task;
 
 #endif

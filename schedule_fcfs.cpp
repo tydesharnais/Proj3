@@ -21,7 +21,7 @@ typedef struct task {
 queue<Task> taskQueue; 
 
 // add a new task to the list of tasks
- void add(char *name, int priority, int burst) 
+ void add(char *name, int priority, int burst, int tid) 
 {
     
     Task task;
@@ -29,13 +29,14 @@ queue<Task> taskQueue;
    // task.tid = 999;
     task.priority = priority;
     task.burst = burst;
+    task.tid = tid;
   //  std::cout << "Added " << name << task.name << " " << priority << " " << burst << std::endl;
 
     
 
     
     taskQueue.push(task);
-    cout << taskQueue.front().name << endl;
+    cout << taskQueue.front().tid << endl;
 	// TODO: add your implementation here
 	
 }
@@ -79,7 +80,7 @@ void schedule()
 
        
 
-        cout << tempTask.name << " turn-around time = " << turn_Time << ", waiting time = " << wait_Time << endl;
+        cout << "T" << tempTask.tid << " turn-around time = " << turn_Time << ", waiting time = " << wait_Time << endl;
         
         
     }

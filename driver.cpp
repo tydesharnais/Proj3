@@ -34,6 +34,7 @@ int main(int argc, char *argv[]){
     char *name;
     int priority;
     int burst;
+    int tid;
 
     in = fopen(argv[1],"r");
     
@@ -41,14 +42,14 @@ int main(int argc, char *argv[]){
         name = strtok(task,",");
         priority = atoi(strtok(NULL, ","));
         burst = atoi(strtok(NULL, ","));
-
+        tid =  name[1]-'0';
       //  temp = strdup(task);
       //  string tempSplit[] = strtok(temp,",");
         
         // add the task to the scheduler's list of tasks
         
-        add(name,priority,burst);
-        //std::cout << "Added " << name << " " << priority << " " << burst << std::endl;
+        add(name,priority,burst, tid);
+        std::cout << "Added " << name << " " << priority << " " << burst <<" " << tid << std::endl;
 
       //  free(temp);
     }
