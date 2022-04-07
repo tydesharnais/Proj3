@@ -36,7 +36,7 @@ queue<Task> taskQueue;
 
     
     taskQueue.push(task);
-    cout << taskQueue.front().tid << endl;
+  
 	// TODO: add your implementation here
 	
 }
@@ -48,7 +48,6 @@ void schedule()
 {
     float turn_Time = 0;
     float wait_Time = 0;
-    float reponse_Time = 0;
     int final_Time = 0;
     int final_Wait = 0;
     int num_Tasks = 0;
